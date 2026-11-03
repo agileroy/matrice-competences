@@ -8,4 +8,4 @@
 
 - [x] 2.1 Essai automatisé dans Chromium : accueil, démo, notation, deux onglets, rechargement, absence, plan, recommencer (confirmation désarmée par un clic ailleurs), 390 px, sombre, aucune erreur.
 - [x] 2.2 README.
-- [ ] 2.3 Sur le site publié : ouvrir la démo depuis l'accueil, essayer « Demander mon équipe ».
+- [x] 2.3 Sur le site publié : ouvrir la démo depuis l'accueil, essayer « Demander mon équipe ». Fait : vérifié par l'auteur le 3 novembre 2026 (l'application de messagerie s'ouvre avec le message prérempli).
