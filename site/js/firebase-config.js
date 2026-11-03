@@ -1,11 +1,11 @@
-// Configuration web du projet Firebase (publique par nature : la sécurité repose
-// sur database.rules.json, la connexion anonyme et les domaines autorisés).
+// Configuration web du projet Firebase dédié à la matrice de compétences (publique par nature :
+// la sécurité repose sur database.rules.json, la connexion et les domaines autorisés).
 export const firebaseConfig = {
-  apiKey: 'AIzaSyCpyzj6hUBitcD-xzLglLZMWuY2kVB_Cgc',
-  authDomain: 'poker-planning-vleroy.firebaseapp.com',
-  databaseURL: 'https://poker-planning-vleroy-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'poker-planning-vleroy',
-  storageBucket: 'poker-planning-vleroy.firebasestorage.app',
-  messagingSenderId: '999561926520',
-  appId: '1:999561926520:web:5d34c607595a32177a9a8d',
+  apiKey: 'AIzaSyB4vB2RTad62w_IyASelngZW7EVtt3TYn4',
+  authDomain: 'matrice-competences-vleroy.firebaseapp.com',
+  databaseURL: 'https://matrice-competences-vleroy-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'matrice-competences-vleroy',
+  storageBucket: 'matrice-competences-vleroy.firebasestorage.app',
+  messagingSenderId: '724892594323',
+  appId: '1:724892594323:web:37302e1d155fc142b95d66',
 };

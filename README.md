@@ -54,7 +54,7 @@ Comme pour le poker planning, le VPN de l'entreprise (proxy Zscaler) bloque GitH
 
 ## Architecture
 
-Site statique (HTML/CSS/JavaScript, sans build) publié sur GitHub Pages ; les données sont dans Firebase Realtime Database (connexion anonyme), dans la branche `skillMatrix` de la base du projet `poker-planning-vleroy`, partagée avec le poker planning.
+Site statique (HTML/CSS/JavaScript, sans build) publié sur GitHub Pages ; les données sont dans Firebase Realtime Database (connexion anonyme, Google pour l'administration), dans la branche `skillMatrix` du projet Firebase propre à la matrice (`matrice-competences-vleroy`).
 
 - `site/js/matrix-core.js` : logique métier pure (couverture, absences, plan de formation, validations), testée avec Node.js ;
 - `site/js/matrix-store.js` : seul module qui parle à Firebase ;
@@ -64,7 +64,7 @@ Site statique (HTML/CSS/JavaScript, sans build) publié sur GitHub Pages ; les d
 - `site/js/app.js` et `site/js/admin-app.js` : points d'entrée ; `site/js/theme.js` : thème clair / sombre ;
 - `site/vendor/` : générateur de QR code `qrcode-generator` 1.4.4 (licence MIT), comme le poker planning ;
 - `site/js/firebase-config.js` : configuration web Firebase (publique par nature) ;
-- `database.rules.json` : règles de sécurité de **toute** la base (salle du poker planning, matrice, [roue de la chance](https://github.com/agileroy/wheel-of-chance) et [Moving Motivators](https://github.com/agileroy/moving-motivators) et [Rôles et responsabilités](https://github.com/agileroy/roles-responsabilites)). La console Firebase n'accepte qu'un seul fichier de règles par base : garder ce fichier identique à celui de `poker-planning`, de `wheel-of-chance`, de `moving-motivators` et de `roles-responsabilites`, et le publier dans la console après chaque modification.
+- `database.rules.json` : règles de sécurité de la base, limitées à la branche `skillMatrix` (projet désigné par `firebase.json` et `.firebaserc`). Elles sont publiées automatiquement à chaque push sur `main`, après les tests, par le job `rules` du workflow (Firebase CLI avec le compte de service du secret `FIREBASE_SERVICE_ACCOUNT`) ; sans ce secret, le job est sauté avec un avertissement et les règles sont à publier à la main dans la console Firebase.
 
 Données :
 
@@ -82,10 +82,9 @@ skillMatrix/
 
 ## Mise en service (console Firebase)
 
-1. Publier `database.rules.json` dans Realtime Database → Règles (le fichier contient aussi les règles du poker planning, inchangées).
-2. Authentication → Méthode de connexion : activer **Google**.
+1. Créer le projet `matrice-competences-vleroy` : Realtime Database (europe-west1), Authentication → Méthode de connexion : activer **Anonyme** et **Google** ; `agileroy.github.io` dans les domaines autorisés.
+2. Créer le secret `FIREBASE_SERVICE_ACCOUNT` (clé privée d'un compte de service du projet) dans le dépôt : les règles sont ensuite publiées automatiquement à chaque push sur `main`.
 3. Se connecter sur `admin.html`, copier l'identifiant affiché, puis dans Realtime Database → Données, créer `skillMatrix/admins/<identifiant>` avec la valeur `true`.
-4. Effacer les anciennes branches `skillMatrix/skills`, `skillMatrix/members` et `skillMatrix/ratings` (version à une seule matrice), qui ne sont plus lues.
 
 ## Développement
 
@@ -94,7 +93,7 @@ npm test                                          # tests de la logique métier
 python3 -m http.server 8765 --directory site      # puis http://localhost:8765
 ```
 
-Chaque push sur `main` lance les tests puis publie `site/` sur GitHub Pages ; un test en échec bloque la publication.
+Chaque push sur `main` lance les tests, publie les règles Firebase puis publie `site/` sur GitHub Pages ; un test en échec bloque les deux publications.
 
 ## Méthode
 

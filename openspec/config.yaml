@@ -8,14 +8,14 @@ context: |
   (meilleure note) et un back-up (deuxième note) qui atteignent chacun un niveau cible fixé par l'équipe.
   Échelle de 0 à 4 : 0 et 1 ne connaissent pas (1 = intéressé·e), 2 première expérience, 3 autonome, 4 maîtrise.
   Hébergement : site statique sur GitHub Pages (https://agileroy.github.io/matrice-competences/), sans serveur à maintenir.
-  Temps réel : Firebase Realtime Database (offre gratuite), base partagée avec poker-planning, branche skillMatrix ;
+  Temps réel : Firebase Realtime Database (offre gratuite), projet dédié matrice-competences-vleroy, branche skillMatrix ;
   aucun autre service tiers (ni police web, ni traceur). N'utiliser que HTTPS (port 443).
   Le VPN de l'entreprise (proxy Zscaler) bloque GitHub Pages et Firebase.
   Stack : HTML/CSS/JavaScript vanilla en modules ES, sans framework ni étape de build (dossier site/), comme poker-planning.
   Architecture : site/js/matrix-core.js contient la logique métier pure (sans DOM ni Firebase) ;
   site/js/matrix-store.js est le seul module qui parle à Firebase ; site/js/ui.js gère l'interface.
-  Les règles de sécurité Firebase (database.rules.json) couvrent toute la base partagée (poker, matrice et roue de la chance)
-  et doivent rester identiques à celles de poker-planning et wheel-of-chance.
+  Les règles de sécurité Firebase (database.rules.json) ne couvrent que la branche skillMatrix du projet dédié ;
+  elles sont publiées automatiquement par GitHub Actions après les tests (secret FIREBASE_SERVICE_ACCOUNT).
   Sans compte : chacun choisit son nom dans l'équipe, mémorisé dans le navigateur ; interface en français.
   Tests : lanceur intégré de Node.js (npm test), à faire évoluer avec chaque changement de comportement ;
   la publication GitHub Actions est bloquée si un test échoue.
